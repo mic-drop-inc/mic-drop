@@ -1,0 +1,139 @@
+/* Plumb design tokens — the one file to re-skin everything (see DESIGN.md).
+   Components reference semantic tokens only; never hard-code hex.
+   Thesis: warm materials, engineered precision. No pure grays — every neutral
+   carries a faint olive/taupe cast (the Sand ramp). One amber accent, one azure. */
+
+:root {
+  /* --- Sand ramp: warm neutrals, olive/taupe undertone (no pure grays) --- */
+  --sand-50:  #faf8f3;
+  --sand-100: #f3eee4;
+  --sand-200: #e7e0d2;
+  --sand-300: #d7ccb9;
+  --sand-400: #bdb097;
+  --sand-500: #9a8e76;
+  --sand-600: #79705e;
+  --sand-700: #5b5447;
+  --sand-800: #403b32;
+  --sand-900: #2b2821;
+  --sand-950: #1b1915;
+
+  /* --- Amber / brass: the one confident accent --- */
+  --amber-300: #e7c277;
+  --amber-400: #d8a440;  /* primary accent */
+  --amber-500: #bd8a2d;
+  --amber-600: #976e23;
+
+  /* --- Azure: the single cool note (info, links, one data series) --- */
+  --azure-400: #5887a3;
+  --azure-500: #436f8a;
+
+  /* --- Status hues (paired with pale -bg washes) --- */
+  --sage:  #6f8f5f;  /* good / excellent */
+  --clay:  #b98a4e;  /* average / caution */
+  --rust:  #b35a3b;  /* needs work / violation */
+
+  /* --- Semantic tokens (light) --- */
+  --bg:          var(--sand-100);
+  --surface:     #fbf9f4;
+  --surface-2:   var(--sand-50);
+  --fg:          var(--sand-900);
+  --fg-muted:    var(--sand-600);
+  --fg-faint:    var(--sand-500);
+  --border:      var(--sand-300);
+  --border-soft: var(--sand-200);
+
+  --brand:        var(--amber-400);
+  --brand-bg:     var(--amber-400);
+  --brand-strong: var(--amber-500);
+  --brand-fg:     #221d10;                  /* near-black ON amber, never white */
+  --brand-subtle: rgba(216, 164, 64, 0.16); /* pale amber wash for selection */
+  --ring:         rgba(216, 164, 64, 0.55);
+
+  --azure:        var(--azure-500);
+  --azure-subtle: rgba(67, 111, 138, 0.12);
+
+  --good-fg: var(--sage); --good-bg: rgba(111, 143, 95, 0.14);
+  --avg-fg:  var(--clay); --avg-bg:  rgba(185, 138, 78, 0.15);
+  --bad-fg:  var(--rust); --bad-bg:  rgba(179, 90, 59, 0.13);
+
+  /* --- Radii: engineered but humane --- */
+  --radius-sm: 8px;
+  --radius:    10px;
+  --radius-lg: 14px;
+
+  /* --- Warm-tinted shadows (brown, not black) --- */
+  --shadow-sm: 0 1px 2px rgba(58, 43, 24, 0.07), 0 1px 3px rgba(58, 43, 24, 0.05);
+  --shadow-md: 0 2px 6px rgba(58, 43, 24, 0.09), 0 6px 16px rgba(58, 43, 24, 0.07);
+
+  /* --- Motion: calm, damped, no overshoot --- */
+  --dur: 180ms;
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+
+  /* --- Type --- */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+[data-theme="dark"] {
+  --bg:          var(--sand-950);
+  --surface:     #24211b;
+  --surface-2:   #2b2820;
+  --fg:          #ece5d8;
+  --fg-muted:    #a89e8a;
+  --fg-faint:    var(--sand-600);
+  --border:      #3a352c;
+  --border-soft: #322e26;
+
+  --brand-subtle: rgba(216, 164, 64, 0.18);
+  --ring:         rgba(216, 164, 64, 0.6);
+  --azure:        var(--azure-400);
+  --azure-subtle: rgba(88, 135, 163, 0.18);
+
+  --good-bg: rgba(111, 143, 95, 0.2);
+  --avg-bg:  rgba(185, 138, 78, 0.2);
+  --bad-bg:  rgba(179, 90, 59, 0.2);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.35), 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Base --- */
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-weight: 650; line-height: 1.2; margin: 0; letter-spacing: -0.01em; }
+
+a { color: var(--azure); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Mono is a voice — overlines, codes, numbers, timestamps. */
+.mono { font-family: var(--font-mono); }
+.overline {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+/* Focus is always visible (non-negotiable). */
+:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 1px;
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
