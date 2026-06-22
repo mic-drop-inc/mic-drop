@@ -99,3 +99,11 @@ API needs a secure context and isn't in Safari/Firefox). `file://` will not work
 - TypeScript is split: `tsconfig.json` checks `src/` (DOM/Vite); `tsconfig.node.json`
   covers `scripts/` + `test/` (Bun types). The `build` script only typechecks `src/`.
 - File paths in this repo contain spaces — quote them in shell commands.
+
+## Development workflow
+
+For every non-trivial change (feature, fix, infrastructure update):
+
+1. **Open a GitHub issue first** (`gh issue create --repo mic-drop-inc/mic-drop`) — document what's changing and why.
+2. Work on a branch, commit changes.
+3. **Open a PR** (`gh pr create`) and reference the issue in the body (`Closes #N`) so it auto-closes on merge.
