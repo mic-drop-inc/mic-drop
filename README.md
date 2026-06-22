@@ -69,4 +69,4 @@ See `implementation-notes.md` (repo root) for design decisions.
 
 ## License
 
-[MIT](../LICENSE) — see the [repo root](../README.md) for the whole project.
+[MIT](LICENSE) — see the [repo root](README.md) for the whole project.
