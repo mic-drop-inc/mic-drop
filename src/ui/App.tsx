@@ -130,18 +130,16 @@ export function App() {
     refreshList(eventKey);
   }
 
-  // Apply the ranking board: rankedIds (in order) get rank 1..n; unrankedIds (in
-  // order) get rank null + speakingOrder 1..n (the left column is the speaking
-  // queue). One pass + a single debounced persist.
-  function applyBoard(rankedIds: number[], unrankedIds: number[]) {
+  // Apply the ranking board: rankedIds (in order) get rank 1..n; unrankedIds get
+  // rank null. Speaking order is never touched here — it reflects when each
+  // competitor spoke and is set elsewhere.
+  function applyBoard(rankedIds: number[], _unrankedIds: number[]) {
     if (!eventKey) return;
     const rankMap = new Map(rankedIds.map((id, i) => [id, i + 1] as const));
-    const orderMap = new Map(unrankedIds.map((id, i) => [id, i + 1] as const));
     for (const b of store.list(eventKey)) {
       const rank = rankMap.get(b.id!) ?? null;
-      const speakingOrder = orderMap.has(b.id!) ? orderMap.get(b.id!)! : b.speakingOrder;
-      if (b.rank !== rank || b.speakingOrder !== speakingOrder) {
-        store.save({ ...b, rank, speakingOrder, updatedAt: new Date().toISOString() });
+      if (b.rank !== rank) {
+        store.save({ ...b, rank, updatedAt: new Date().toISOString() });
       }
     }
     store.scheduleSave();
@@ -149,8 +147,7 @@ export function App() {
     setDraft((d) => {
       if (!d || d.id == null) return d;
       const rank = rankMap.get(d.id) ?? null;
-      const speakingOrder = orderMap.has(d.id) ? orderMap.get(d.id)! : d.speakingOrder;
-      return (d.rank === rank && d.speakingOrder === speakingOrder) ? d : { ...d, rank, speakingOrder };
+      return d.rank === rank ? d : { ...d, rank };
     });
   }
 
